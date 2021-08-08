@@ -1,28 +1,52 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+  <div>
+    <titulo />
+    <div class="centrar">
+      <label class="tarea">Tarea </label>
+      <input type="text" placeholder="Ingresa nueva tarea" v-model="nuevaTarea" />
+      <button class="boton" @click="agregarTarea">Crear</button>
+    </div>
+    <lista />
+    <div class="centrar">
+      <ul>
+        <li v-for="(tarea, $index) in tareas" :key="$index">{{ $index }} : {{ tarea }}</li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import Titulo from '@/components/Titulo.vue'
+import Lista from '@/components/Lista.vue'
 
 export default {
-  name: "App",
+  name: 'App',
   components: {
-    HelloWorld,
+    Titulo,
+    Lista,
   },
-};
+  data: () => ({
+    nuevaTarea: '',
+    tareas: ['Ir al supermecado', 'Pagar Internet', 'Pagar Netflix'],
+  }),
+  methods: {
+    agregarTarea() {
+      this.tareas.push(this.nuevaTarea)
+      this.nuevaTarea = ''
+    },
+  },
+}
 </script>
-
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style>
+.centrar {
+  display: flex;
+  justify-content: center;
+}
+.tarea {
+  font-weight: bold;
+  margin-right: 5px;
+}
+.boton {
+  margin-left: 5px;
 }
 </style>
